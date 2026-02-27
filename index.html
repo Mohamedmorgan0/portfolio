@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Study Coach</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;800&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+
+<style>
+:root{
+--bg1:#141e30;
+--bg2:#243b55;
+--glass:rgba(255,255,255,0.08);
+--accent:#4f46e5;
+--success:#22c55e;
+--warning:#facc15;
+--danger:#ef4444;
+}
+
+*{margin:0;padding:0;box-sizing:border-box;}
+
+body{
+font-family:'Cairo',sans-serif;
+background:linear-gradient(135deg,var(--bg1),var(--bg2));
+min-height:100vh;
+display:flex;
+align-items:center;
+justify-content:center;
+color:white;
+}
+
+.container{
+width:95%;
+max-width:1000px;
+}
+
+.card{
+background:var(--glass);
+backdrop-filter:blur(18px);
+padding:40px;
+border-radius:20px;
+box-shadow:0 25px 60px rgba(0,0,0,0.4);
+animation:fadeUp 0.8s ease;
+}
+
+@keyframes fadeUp{
+from{opacity:0;transform:translateY(30px);}
+to{opacity:1;transform:translateY(0);}
+}
+
+h1{text-align:center;margin-bottom:10px;font-size:30px;}
+.subtitle{text-align:center;opacity:0.8;margin-bottom:25px;}
+
+input{
+width:100%;
+padding:12px;
+border-radius:12px;
+border:none;
+margin-top:10px;
+font-family:'Inter',sans-serif;
+}
+
+.subject-row{
+display:flex;
+gap:10px;
+margin-top:15px;
+}
+
+button{
+padding:12px 20px;
+border:none;
+border-radius:12px;
+cursor:pointer;
+margin-top:20px;
+font-weight:bold;
+background:var(--accent);
+color:white;
+transition:0.3s;
+}
+
+button:hover{
+transform:scale(1.05);
+box-shadow:0 10px 25px rgba(79,70,229,0.5);
+}
+
+.result{
+margin-top:25px;
+padding:20px;
+border-radius:15px;
+background:rgba(255,255,255,0.08);
+animation:fadeUp 0.6s ease;
+}
+
+.good{
+border-left:6px solid var(--success);
+animation:glow 1.2s infinite alternate;
+}
+
+@keyframes glow{
+from{box-shadow:0 0 10px var(--success);}
+to{box-shadow:0 0 25px var(--success);}
+}
+
+.medium{border-left:6px solid var(--warning);}
+.bad{border-left:6px solid var(--danger);}
+
+.plan{
+margin-top:10px;
+font-size:14px;
+opacity:0.9;
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+<div class="card">
+<h1>🤖 AI Study Coach</h1>
+<p class="subtitle">مدربك الذكي لتطوير مستواك الدراسي</p>
+
+<input type="text" id="name" placeholder="اسم الطالب">
+
+<div id="subjects"></div>
+
+<button onclick="addSubject()">+ إضافة مادة</button>
+<button onclick="analyze()">تحليل ذكي</button>
+
+<div id="output"></div>
+</div>
+</div>
+
+<script>
+
+let count=0;
+
+function addSubject(){
+count++;
+let div=document.createElement("div");
+div.className="subject-row";
+div.innerHTML=`
+<input type="text" placeholder="اسم المادة" id="sub${count}">
+<input type="number" placeholder="الدرجة" id="grade${count}" min="0" max="100">
+`;
+document.getElementById("subjects").appendChild(div);
+}
+
+function generatePlan(subject,grade){
+
+if(grade>=85){
+return `
+🎉 ممتاز جداً في ${subject}!  
+✔ راجع مرة أسبوعياً فقط  
+✔ حل امتحان شامل كل أسبوعين  
+✔ ابدأ تساعد زملائك (تعلم بالمشاركة)  
+`;
+}
+
+if(grade>=60){
+return `
+📈 مستواك متوسط في ${subject}  
+✔ 3 جلسات أسبوعياً (45 دقيقة)  
+✔ ركز على حل الأسئلة التطبيقية  
+✔ لخص الدروس بخريطة ذهنية  
+`;
+}
+
+return `
+🚨 تحتاج تقوية في ${subject}  
+✔ 5 جلسات أسبوعياً (ساعة يومياً)  
+✔ راجع الأساسيات من جديد  
+✔ شاهد شرح إضافي  
+✔ حل 20 سؤال يومياً  
+`;
+}
+
+function analyze(){
+
+let output=document.getElementById("output");
+output.innerHTML="";
+
+for(let i=1;i<=count;i++){
+
+let subject=document.getElementById(`sub${i}`).value;
+let grade=parseInt(document.getElementById(`grade${i}`).value);
+
+if(subject && !isNaN(grade)){
+
+let plan=generatePlan(subject,grade);
+
+let div=document.createElement("div");
+div.className="result";
+
+if(grade>=85){div.classList.add("good");}
+else if(grade>=60){div.classList.add("medium");}
+else{div.classList.add("bad");}
+
+div.innerHTML=`
+<h3>${subject} - ${grade}</h3>
+<div class="plan">${plan}</div>
+`;
+
+output.appendChild(div);
+}
+}
+}
+
+addSubject();
+</script>
+
+</body>
+</html>
