@@ -1,0 +1,174 @@
+body {
+    margin: 0;
+    font-family: 'Cairo', sans-serif;
+    background: linear-gradient(135deg,#1e3a8a,#2563eb);
+    color: white;
+    transition: 0.4s;
+}
+
+body.light {
+    background: #f4f4f4;
+    color: #111;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px 40px;
+    font-family: 'Poppins', sans-serif;
+}
+
+#modeToggle {
+    background: none;
+    border: none;
+    font-size: 22px;
+    cursor: pointer;
+    color: inherit;
+}
+
+.tabs {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.tab {
+    background: rgba(255,255,255,0.2);
+    border: none;
+    padding: 10px 20px;
+    margin: 5px;
+    border-radius: 20px;
+    cursor: pointer;
+    color: white;
+}
+
+.tab.active {
+    background: white;
+    color: #2563eb;
+}
+
+body.light .tab {
+    background: #ddd;
+    color: #111;
+}
+
+body.light .tab.active {
+    background: #2563eb;
+    color: white;
+}
+
+.content {
+    display: none;
+    padding: 40px;
+}
+
+.content.active {
+    display: block;
+}
+
+.glass {
+    background: rgba(255,255,255,0.15);
+    backdrop-filter: blur(10px);
+    padding: 30px;
+    border-radius: 20px;
+    max-width: 700px;
+    margin: auto;
+}
+
+body.light .glass {
+    background: rgba(255,255,255,0.9);
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit,minmax(250px,1fr));
+    gap: 25px;
+}
+
+.card {
+    background: rgba(255,255,255,0.15);
+    backdrop-filter: blur(12px);
+    padding: 25px;
+    border-radius: 20px;
+    transition: 0.4s;
+    transform: translateY(20px);
+    opacity: 0;
+    animation: fadeIn 0.8s forwards;
+}
+
+.card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+}
+
+body.light .card {
+    background: rgba(255,255,255,0.95);
+}
+
+@keyframes fadeIn {
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+/* Animated Particles Background */
+body::before {
+    content: '';
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle, rgba(255,255,255,0.1) 1px, transparent 1px);
+    background-size: 20px 20px;
+    animation: moveBG 10s linear infinite;
+    z-index: -1;
+}
+
+@keyframes moveBG {
+    0% { background-position: 0 0; }
+    100% { background-position: 100px 100px; }
+}
+
+/* Video Card */
+.video-card {
+    margin: 20px auto;
+    max-width: 800px;
+    text-align: center;
+}
+
+/* Counters */
+.counters {
+    display: flex;
+    justify-content: space-around;
+    margin: 30px auto;
+    max-width: 900px;
+}
+
+.counter h3 {
+    font-size: 40px;
+    margin: 0;
+    color: #ffeb3b;
+    transition: 1s ease;
+}
+
+.counter p {
+    margin-top: 5px;
+    font-weight: bold;
+    color: #fff;
+}
+
+/* Cards animation for typing effect */
+.card p {
+    display: inline-block;
+    overflow: hidden;
+    white-space: pre-wrap;
+    border-right: .15em solid orange;
+    animation: typing 1.5s steps(40, end), blink .75s step-end infinite;
+}
+
+@keyframes typing {
+    from { width: 0 }
+    to { width: 100% }
+}
+
+@keyframes blink {
+    50% { border-color: transparent }
+}
